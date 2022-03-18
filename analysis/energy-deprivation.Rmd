@@ -49,7 +49,8 @@ energy_deprivation <-
 
 
 ```{r}
-energy_deprivation %>% 
+plot_england <-
+  energy_deprivation %>% 
   filter(
     Year == 2020
   ) %>% 
@@ -71,9 +72,8 @@ energy_deprivation %>%
   ggplot(aes(
     x = `Median gas consumption (kWh per meter)`,
     y = `Median electricity consumption (kWh per meter)`,
-    colour = `Selected LAD`
+    fill = `Selected LAD`
   )) +
-  #geom_text(
   geom_text_repel(
     aes(label = plot_label_leicester),
     colour = "#003090",
@@ -82,10 +82,10 @@ energy_deprivation %>%
     force = 1,
     segment.curvature = -0.1
   ) + 
-  geom_point(alpha = 0.7) +
-  scale_color_manual(values = c("#003090", "#cccccc")) +
+  geom_point(shape = 21, colour = "#666666", alpha = 0.7) +
+  scale_fill_manual(values = c("#003090", "#cccccc")) +
   guides(
-   colour = guide_legend(
+   fill = guide_legend(
      title = ""
    )
   ) +
@@ -96,7 +96,8 @@ energy_deprivation %>%
 ```
 
 ```{r}
-energy_deprivation %>% 
+plot_leicester <-
+  energy_deprivation %>% 
   filter(
     `Local Authority District name (2019)` == "Leicester" &
     Year == 2020
@@ -104,12 +105,12 @@ energy_deprivation %>%
   ggplot(aes(
     x = `Median gas consumption (kWh per meter)`,
     y = `Median electricity consumption (kWh per meter)`,
-    colour = as_factor(`Index of Multiple Deprivation (IMD) Decile (where 1 is most deprived 10% of LSOAs)`)
+    fill = as_factor(`Index of Multiple Deprivation (IMD) Decile (where 1 is most deprived 10% of LSOAs)`)
   )) +
-  geom_point(alpha = 0.7) +
-  scale_color_viridis_d(option = "magma") +
+  geom_point(shape = 21, colour = "#666666", alpha = 0.7) +
+  scale_fill_viridis_d(option = "magma") +
   guides(
-    colour = guide_legend(
+    fill = guide_legend(
       title = "IMD 2019"
     )
   ) +
@@ -118,3 +119,13 @@ energy_deprivation %>%
   ggtitle("Detail in Leicester") +
   theme_bw()
 ```
+
+```{r}
+plot_england
+```
+
+```{r}
+plot_leicester
+```
+
+
