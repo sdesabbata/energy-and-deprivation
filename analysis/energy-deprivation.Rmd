@@ -14,6 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(ggrepel)
+library(patchwork)
 ```
 
 
@@ -50,7 +51,7 @@ energy_deprivation <-
 ### Median consumption
 
 ```{r}
-plot_england <-
+median_consumption_imd_plot_england <-
   energy_deprivation %>% 
   filter(
     Year == 2020
@@ -97,7 +98,7 @@ plot_england <-
 ```
 
 ```{r}
-plot_leicester <-
+median_consumption_imd_plot_leicester <-
   energy_deprivation %>% 
   filter(
     `Local Authority District name (2019)` == "Leicester" &
@@ -122,17 +123,56 @@ plot_leicester <-
 ```
 
 ```{r}
-plot_england
+median_consumption_imd_plot_england
 ```
 
 ```{r}
-plot_leicester
+median_consumption_imd_plot_leicester
 ```
+
+```{r}
+imd_score_median_elec_plot_leicester <-
+  energy_deprivation %>% 
+  filter(
+    `Local Authority District name (2019)` == "Leicester" &
+    Year == 2020
+  ) %>% 
+  ggplot(aes(
+    x = `Index of Multiple Deprivation (IMD) Score`,
+    y = `Median electricity consumption (kWh per meter)`
+  )) +
+  geom_point(shape = 21, colour = "#666666", alpha = 0.7) +
+  ylim(1500, 4500) +
+  ggtitle("Electricity consumption in Leicester") +
+  theme_bw()
+```
+
+```{r}
+imd_score_median_gas_plot_leicester <-
+  energy_deprivation %>% 
+  filter(
+    `Local Authority District name (2019)` == "Leicester" &
+    Year == 2020
+  ) %>% 
+  ggplot(aes(
+    x = `Index of Multiple Deprivation (IMD) Score`,
+    y = `Median gas consumption (kWh per meter)`
+  )) +
+  geom_point(shape = 21, colour = "#666666", alpha = 0.7) +
+  ylim(0, 25000) +
+  ggtitle("Gas consumption in Leicester") +
+  theme_bw()
+```
+
+```{r}
+(imd_score_median_elec_plot_leicester + imd_score_median_gas_plot_leicester)
+```
+
 
 ### Mean consumption
 
 ```{r}
-plot_england <-
+mean_consumption_imd_plot_england <-
   energy_deprivation %>% 
   filter(
     Year == 2020
@@ -179,7 +219,7 @@ plot_england <-
 ```
 
 ```{r}
-plot_leicester <-
+mean_consumption_imd_plot_leicester <-
   energy_deprivation %>% 
   filter(
     `Local Authority District name (2019)` == "Leicester" &
@@ -204,13 +244,50 @@ plot_leicester <-
 ```
 
 ```{r}
-plot_england
+mean_consumption_imd_plot_england
 ```
 
 ```{r}
-plot_leicester
+mean_consumption_imd_plot_leicester
 ```
 
+```{r}
+imd_score_meanelec_plot_leicester <-
+  energy_deprivation %>% 
+  filter(
+    `Local Authority District name (2019)` == "Leicester" &
+    Year == 2020
+  ) %>% 
+  ggplot(aes(
+    x = `Index of Multiple Deprivation (IMD) Score`,
+    y = `Mean electricity consumption (kWh per meter)`
+  )) +
+  geom_point(shape = 21, colour = "#666666", alpha = 0.7) +
+  ylim(1500, 4500) +
+  ggtitle("Electricity consumption in Leicester") +
+  theme_bw()
+```
+
+```{r}
+imd_score_meangas_plot_leicester <-
+  energy_deprivation %>% 
+  filter(
+    `Local Authority District name (2019)` == "Leicester" &
+    Year == 2020
+  ) %>% 
+  ggplot(aes(
+    x = `Index of Multiple Deprivation (IMD) Score`,
+    y = `Mean gas consumption (kWh per meter)`
+  )) +
+  geom_point(shape = 21, colour = "#666666", alpha = 0.7) +
+  ylim(0, 25000) +
+  ggtitle("Gas consumption in Leicester") +
+  theme_bw()
+```
+
+```{r}
+(imd_score_meanelec_plot_leicester + imd_score_meangas_plot_leicester)
+```
 
 ## Session info
 

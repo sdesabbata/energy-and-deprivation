@@ -11,6 +11,7 @@ tidyverse
 RCurl
 readxl
 ggrepel
+patchwork
 ```
 
 After cloning the repository, you can set up the `data` folder and download the data running the four scripts in the `utils` folder as shown below.
