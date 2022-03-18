@@ -82,7 +82,7 @@ energy_deprivation %>%
     force = 1,
     segment.curvature = -0.1
   ) + 
-  geom_point() +
+  geom_point(alpha = 0.7) +
   scale_color_manual(values = c("#003090", "#cccccc")) +
   guides(
    colour = guide_legend(
@@ -106,7 +106,7 @@ energy_deprivation %>%
     y = `Median electricity consumption (kWh per meter)`,
     colour = as_factor(`Index of Multiple Deprivation (IMD) Decile (where 1 is most deprived 10% of LSOAs)`)
   )) +
-  geom_point() +
+  geom_point(alpha = 0.7) +
   scale_color_viridis_d(option = "magma") +
   guides(
     colour = guide_legend(
