@@ -37,3 +37,10 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+
+# Additional files to ignore
+.DS_Store
+*/.DS_Store
+
+# Additional directories to ignore
+/data

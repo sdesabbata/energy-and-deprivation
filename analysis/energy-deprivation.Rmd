@@ -1,0 +1,116 @@
+---
+title: "Deprivation and energy consumption"
+author: "Stefano De Sabbata"
+date: "17/03/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Libraries
+
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(ggrepel)
+```
+
+
+## Data
+
+### Load data
+
+```{r, message=FALSE, warning=FALSE}
+imd_2019 <- read_csv("../data/indices-of-multiple-deprivation-2019.csv")
+elec_2010_2020 <- read_csv("../data/LSOA_domestic_elec_2010-20.csv")
+gas_2010_2020 <- read_csv("../data/LSOA_domestic_gas_2010-20.csv")
+```
+
+### Merge data
+
+```{r, message=FALSE, warning=FALSE}
+energy_deprivation <-
+  imd_2019 %>% 
+  filter(str_starts(`Local Authority District code (2019)`, "E")) %>% 
+  select(-`LSOA name (2011)`) %>% 
+  rename(`LSOA code` = `LSOA code (2011)`) %>% 
+  left_join(
+    elec_2010_2020 %>% 
+      left_join(gas_2010_2020)
+  )
+```
+
+## Visualisation
+
+
+```{r}
+energy_deprivation %>% 
+  filter(
+    Year == 2020
+  ) %>% 
+  group_by(`Local Authority District name (2019)`) %>% 
+  summarise(
+    `Median gas consumption (kWh per meter)` = median(`Median gas consumption (kWh per meter)`),
+    `Median electricity consumption (kWh per meter)` = median(`Median electricity consumption (kWh per meter)`)
+  ) %>% 
+  mutate(
+    `Selected LAD` = if_else(
+      `Local Authority District name (2019)` == "Leicester",
+      `Local Authority District name (2019)`, "Other LAD"
+      ),
+    plot_label_leicester = if_else(
+      `Local Authority District name (2019)` == "Leicester",
+      "Leicester", as.character(NA)
+    )
+  ) %>% 
+  ggplot(aes(
+    x = `Median gas consumption (kWh per meter)`,
+    y = `Median electricity consumption (kWh per meter)`,
+    colour = `Selected LAD`
+  )) +
+  #geom_text(
+  geom_text_repel(
+    aes(label = plot_label_leicester),
+    colour = "#003090",
+    xlim = c(14000, NA),
+    ylim = c(NA, 2600),
+    force = 1,
+    segment.curvature = -0.1
+  ) + 
+  geom_point() +
+  scale_color_manual(values = c("#003090", "#cccccc")) +
+  guides(
+   colour = guide_legend(
+     title = ""
+   )
+  ) +
+  xlim(0, 25000) +
+  ylim(1500, 4500) +
+  ggtitle("Overview in England") +
+  theme_bw()
+```
+
+```{r}
+energy_deprivation %>% 
+  filter(
+    `Local Authority District name (2019)` == "Leicester" &
+    Year == 2020
+  ) %>% 
+  ggplot(aes(
+    x = `Median gas consumption (kWh per meter)`,
+    y = `Median electricity consumption (kWh per meter)`,
+    colour = as_factor(`Index of Multiple Deprivation (IMD) Decile (where 1 is most deprived 10% of LSOAs)`)
+  )) +
+  geom_point() +
+  scale_color_viridis_d(option = "magma") +
+  guides(
+    colour = guide_legend(
+      title = "IMD 2019"
+    )
+  ) +
+  xlim(0, 25000) +
+  ylim(1500, 4500) +
+  ggtitle("Detail in Leicester") +
+  theme_bw()
+```
