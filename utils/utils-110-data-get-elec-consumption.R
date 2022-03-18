@@ -2,7 +2,7 @@
 # This script downloads the electricity consumption data
 # released by the UK Department for Business, Energy & Industrial Strategy
 # from the UK Government website
-# https://www.gov.uk/government/statistics/lower-and-middle-super-output-areas-elec-consumption
+# https://www.gov.uk/government/statistics/lower-and-middle-super-output-areas-electricity-consumption
 # available under the Open Government Licence v3.0
 # https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/
 # ---
