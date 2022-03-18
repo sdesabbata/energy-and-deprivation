@@ -6,6 +6,8 @@ The analyses in this repository aim explore the relationship between deprivation
 
 - [First exploratory analysis](analysis/analysis-000-exploratory-energy-deprivation.html)
 
+See also: [Related works](notes/related-works.md).
+
 ## Reproducibility
 
 The code in this repository uses the following libraries.
