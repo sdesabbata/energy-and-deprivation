@@ -1,2 +1,3 @@
-# energy-and-deprivation
-An analysis of the relationship between deprivation and electricity and gas consumption 
+# An analysis of the relationship between deprivation and electricity and gas consumption 
+
+The analyses in this repository use data that contain public sector information licensed under the [Open Government Licence v3.0](https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/) from the [Department for Business, Energy & Industrial Strategy](https://www.gov.uk/government/organisations/department-for-business-energy-and-industrial-strategy), the [Ministry of Housing, Communities & Local Government](https://www.gov.uk/government/organisations/ministry-of-housing-communities-and-local-government) and the [Office for National Statistics](https://www.ons.gov.uk/) (see also [ONS geography licences](https://www.ons.gov.uk/methodology/geography/licences)).
