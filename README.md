@@ -2,6 +2,10 @@
 
 The analyses in this repository aim explore the relationship between deprivation and electricity and gas consumption.
 
+## Analaysis
+
+- [First exploratory analysis](analysis/analysis-000-exploratory-energy-deprivation.html)
+
 ## Reproducibility
 
 The code in this repository uses the following libraries.
@@ -14,13 +18,15 @@ ggrepel
 patchwork
 ```
 
-After cloning the repository, you can set up the `data` folder and download the data running the four scripts in the `utils` folder as shown below.
+After cloning the repository, you can set up the `data` folder, download the data by running the four scripts in the `utils` folder and render the analysis documents as shown below.
 
 ```
-source("utils/000-prep.R")
-source("utils/100-data-get-IMD2019.R")
-source("utils/110-data-get-elec-consumption.R")
-source("utils/111-data-get-gas-consumption.R")
+source("utils/utils-000-prep.R")
+source("utils/utils-100-data-get-IMD2019.R")
+source("utils/utils-110-data-get-elec-consumption.R")
+source("utils/utils-111-data-get-gas-consumption.R")
+
+rmarkdown::render("analysis/analysis-000-exploratory-energy-deprivation.Rmd")
 ```
 
 ## Data licence
