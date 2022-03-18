@@ -47,6 +47,7 @@ energy_deprivation <-
 
 ## Visualisation
 
+### Median consumption
 
 ```{r}
 plot_england <-
@@ -128,4 +129,92 @@ plot_england
 plot_leicester
 ```
 
+### Mean consumption
+
+```{r}
+plot_england <-
+  energy_deprivation %>% 
+  filter(
+    Year == 2020
+  ) %>% 
+  group_by(`Local Authority District name (2019)`) %>% 
+  summarise(
+    `Mean gas consumption (kWh per meter)` = mean(`Mean gas consumption (kWh per meter)`),
+    `Mean electricity consumption (kWh per meter)` = mean(`Mean electricity consumption (kWh per meter)`)
+  ) %>% 
+  mutate(
+    `Selected LAD` = if_else(
+      `Local Authority District name (2019)` == "Leicester",
+      `Local Authority District name (2019)`, "Other LAD"
+      ),
+    plot_label_leicester = if_else(
+      `Local Authority District name (2019)` == "Leicester",
+      "Leicester", as.character(NA)
+    )
+  ) %>% 
+  ggplot(aes(
+    x = `Mean gas consumption (kWh per meter)`,
+    y = `Mean electricity consumption (kWh per meter)`,
+    fill = `Selected LAD`
+  )) +
+  geom_text_repel(
+    aes(label = plot_label_leicester),
+    colour = "#003090",
+    xlim = c(16000, NA),
+    ylim = c(NA, 3300),
+    force = 1,
+    segment.curvature = -0.1
+  ) + 
+  geom_point(shape = 21, colour = "#666666", alpha = 0.7) +
+  scale_fill_manual(values = c("#003090", "#cccccc")) +
+  guides(
+   fill = guide_legend(
+     title = ""
+   )
+  ) +
+  xlim(0, 27500) +
+  ylim(2000, 6000) +
+  ggtitle("Overview in England") +
+  theme_bw()
+```
+
+```{r}
+plot_leicester <-
+  energy_deprivation %>% 
+  filter(
+    `Local Authority District name (2019)` == "Leicester" &
+    Year == 2020
+  ) %>% 
+  ggplot(aes(
+    x = `Mean gas consumption (kWh per meter)`,
+    y = `Mean electricity consumption (kWh per meter)`,
+    fill = as_factor(`Index of Multiple Deprivation (IMD) Decile (where 1 is most deprived 10% of LSOAs)`)
+  )) +
+  geom_point(shape = 21, colour = "#666666", alpha = 0.7) +
+  scale_fill_viridis_d(option = "magma") +
+  guides(
+    fill = guide_legend(
+      title = "IMD 2019"
+    )
+  ) +
+  xlim(0, 27500) +
+  ylim(2000, 6000) +
+  ggtitle("Detail in Leicester") +
+  theme_bw()
+```
+
+```{r}
+plot_england
+```
+
+```{r}
+plot_leicester
+```
+
+
+## Session info
+
+```{r}
+sessionInfo()
+```
 
