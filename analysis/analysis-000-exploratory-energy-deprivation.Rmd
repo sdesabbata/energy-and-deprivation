@@ -104,12 +104,29 @@ median_consumption_imd_plot_leicester <-
     `Local Authority District name (2019)` == "Leicester" &
     Year == 2020
   ) %>% 
+  mutate(
+    plot_label_outliers = if_else(
+      (`Median gas consumption (kWh per meter)` < 5000) |
+      (`Median electricity consumption (kWh per meter)` > 3500),
+      `LSOA code`, as.character(NA)
+    )
+  ) %>% 
   ggplot(aes(
     x = `Median gas consumption (kWh per meter)`,
     y = `Median electricity consumption (kWh per meter)`,
     fill = as_factor(`Index of Multiple Deprivation (IMD) Decile (where 1 is most deprived 10% of LSOAs)`)
   )) +
   geom_point(shape = 21, colour = "#666666", alpha = 0.7) +
+  geom_text_repel(
+    aes(label = plot_label_outliers),
+    colour = "#666666", 
+    size = 3,
+    force = 1,
+    force_pull = 0.1,
+    box.padding = 0.5,
+    min.segment.length = 0,
+    segment.curvature = -0.1
+  ) + 
   scale_fill_viridis_d(option = "magma") +
   guides(
     fill = guide_legend(
@@ -225,12 +242,29 @@ mean_consumption_imd_plot_leicester <-
     `Local Authority District name (2019)` == "Leicester" &
     Year == 2020
   ) %>% 
+  mutate(
+    plot_label_outliers = if_else(
+      (`Mean gas consumption (kWh per meter)` < 9500) |
+      (`Mean electricity consumption (kWh per meter)` > 4500),
+      `LSOA code`, as.character(NA)
+    )
+  ) %>% 
   ggplot(aes(
     x = `Mean gas consumption (kWh per meter)`,
     y = `Mean electricity consumption (kWh per meter)`,
     fill = as_factor(`Index of Multiple Deprivation (IMD) Decile (where 1 is most deprived 10% of LSOAs)`)
   )) +
   geom_point(shape = 21, colour = "#666666", alpha = 0.7) +
+  geom_text_repel(
+    aes(label = plot_label_outliers),
+    colour = "#666666", 
+    size = 3,
+    force = 1,
+    force_pull = 0.1,
+    box.padding = 0.5,
+    min.segment.length = 0,
+    segment.curvature = -0.1
+  ) + 
   scale_fill_viridis_d(option = "magma") +
   guides(
     fill = guide_legend(

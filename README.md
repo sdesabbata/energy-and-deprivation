@@ -2,6 +2,8 @@
 
 The analyses in this repository aim explore the relationship between deprivation and electricity and gas consumption.
 
+GitPages site available [here](https://sdesabbata.github.io/energy-and-deprivation/).
+
 ## Analaysis
 
 - [First exploratory analysis](analysis/analysis-000-exploratory-energy-deprivation.html)
